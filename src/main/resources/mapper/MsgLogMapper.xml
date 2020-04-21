@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alanlee.mapper.MsgLogMapper" >
+    <!--消息实体映射-->
     <resultMap id="BaseResultMap" type="com.alanlee.entity.MsgLog" >
         <id column="msg_id" property="msgId" jdbcType="VARCHAR" />
         <result column="msg" property="msg" jdbcType="VARCHAR" />
@@ -13,11 +14,12 @@
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
+    <!--数据表字段-->
     <sql id="Base_Column_List" >
         msg_id, msg, exchange, routing_key, status, try_count, next_try_time, create_time, update_time
     </sql>
 
-    <!--新增消息日志-->
+    <!--新增消息-->
     <insert id="insert" parameterType="com.alanlee.entity.MsgLog">
         INSERT INTO msg_log(msg_id, msg, exchange, routing_key, status, try_count, next_try_time, create_time, update_time)
         VALUES (#{msgId}, #{msg}, #{exchange}, #{routingKey}, #{status}, #{tryCount}, #{nextTryTime}, #{createTime}, #{updateTime})
@@ -29,6 +31,7 @@
         where msg_id = #{msgId}
     </update>
 
+    <!--获取投递中并且下一次投递时间小于当前时间的消息-->
     <select id="selectTimeoutMsg" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
         from msg_log
@@ -36,12 +39,13 @@
         and next_try_time &lt;= now()
     </select>
 
+    <!--修改消息的重试次数和下一次投递时间-->
     <update id="updateTryCount">
         update msg_log set try_count = try_count + 1, next_try_time = #{nextTryTime}, update_time = now()
         where msg_id = #{msgId}
     </update>
 
-    <!--根据消息id查询消息日志-->
+    <!--根据消息id查询消息-->
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />

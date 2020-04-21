@@ -14,10 +14,18 @@ import org.springframework.stereotype.Component;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 
+/**
+ * 邮件发送工具类
+ *
+ * @author AlanLee
+ */
 @Component
 @Slf4j
 public class MailUtil {
 
+    /**
+     * 发件人
+     */
     @Value("${spring.mail.from}")
     private String from;
 
@@ -51,7 +59,7 @@ public class MailUtil {
     }
 
     /**
-     * 发送附件邮件
+     * 发送附件邮件（暂无调用，后续完善业务逻辑）
      *
      * @param mail 邮件
      * @param file 附件

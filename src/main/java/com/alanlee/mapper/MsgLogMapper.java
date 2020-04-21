@@ -12,21 +12,34 @@ import java.util.List;
 public interface MsgLogMapper {
 
     /**
-     * 插入消息日志
+     * 插入消息
+     *
      * @param msgLog
      */
     void insert(MsgLog msgLog);
 
     /**
-     * 修改消息日志状态
+     * 修改消息状态
+     *
      * @param msgLog
      */
     void updateStatus(MsgLog msgLog);
 
     List<MsgLog> selectTimeoutMsg();
 
+    /**
+     * 修改消息的重试次数和下一次投递时间
+     *
+     * @param msgLog
+     */
     void updateTryCount(MsgLog msgLog);
 
+    /**
+     * 根据消息id查询消息
+     *
+     * @param msgId
+     * @return
+     */
     MsgLog selectByPrimaryKey(String msgId);
 
 }

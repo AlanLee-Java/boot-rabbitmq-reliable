@@ -11,9 +11,6 @@ public enum ResponseCode {
     SERVER_ERROR(500, "服务器异常"),
 
     // 通用模块 1xxxx
-    ILLEGAL_ARGUMENT(10000, "参数不合法"),
-    REPETITIVE_OPERATION(10001, "请勿重复操作"),
-    ACCESS_LIMIT(10002, "请求太频繁, 请稍后再试"),
     MAIL_SEND_SUCCESS(10003, "邮件发送成功"),
 
     ;
