@@ -3,7 +3,7 @@ package com.alanlee.exception;
 /**
  * 业务逻辑异常
  */
-public class ServiceException extends RuntimeException{
+public class ServiceException extends RuntimeException {
 
     private String code;
     private String msg;

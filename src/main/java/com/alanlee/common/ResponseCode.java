@@ -16,15 +16,6 @@ public enum ResponseCode {
     ACCESS_LIMIT(10002, "请求太频繁, 请稍后再试"),
     MAIL_SEND_SUCCESS(10003, "邮件发送成功"),
 
-    // 用户模块 2xxxx
-    NEED_LOGIN(20001, "登录失效"),
-    USERNAME_OR_PASSWORD_EMPTY(20002, "用户名或密码不能为空"),
-    USERNAME_OR_PASSWORD_WRONG(20003, "用户名或密码错误"),
-    USER_NOT_EXISTS(20004, "用户不存在"),
-    WRONG_PASSWORD(20005, "密码错误"),
-
-    // 订单模块 4xxxx
-
     ;
 
     ResponseCode(Integer code, String msg) {

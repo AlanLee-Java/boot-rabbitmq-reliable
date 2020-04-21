@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/test")
 @Slf4j
@@ -20,12 +22,8 @@ public class TestController {
     private TestService testService;
 
     @PostMapping("/send")
-    public ServerResponse sendMail(@Validated Mail mail, Errors errors) {
-        if (errors.hasErrors()) {
-            String msg = errors.getFieldError().getDefaultMessage();
-            return ServerResponse.error(msg);
-        }
-
+    public ServerResponse sendMail(@Valid Mail mail) {
         return testService.send(mail);
     }
+
 }
