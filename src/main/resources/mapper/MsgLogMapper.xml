@@ -17,11 +17,13 @@
         msg_id, msg, exchange, routing_key, status, try_count, next_try_time, create_time, update_time
     </sql>
 
+    <!--新增消息日志-->
     <insert id="insert" parameterType="com.alanlee.entity.MsgLog">
         INSERT INTO msg_log(msg_id, msg, exchange, routing_key, status, try_count, next_try_time, create_time, update_time)
         VALUES (#{msgId}, #{msg}, #{exchange}, #{routingKey}, #{status}, #{tryCount}, #{nextTryTime}, #{createTime}, #{updateTime})
     </insert>
 
+    <!--根据消息id修改消息状态-->
     <update id="updateStatus" parameterType="com.alanlee.entity.MsgLog">
         update msg_log set status = #{status}, update_time = now()
         where msg_id = #{msgId}
@@ -39,6 +41,7 @@
         where msg_id = #{msgId}
     </update>
 
+    <!--根据消息id查询消息日志-->
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />

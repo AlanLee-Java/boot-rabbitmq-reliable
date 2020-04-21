@@ -60,16 +60,34 @@ public class RabbitConfig {
     public static final String MAIL_EXCHANGE_NAME = "mail.exchange";
     public static final String MAIL_ROUTING_KEY_NAME = "mail.routing.key";
 
+    /**
+     * 第一个参数队列名称
+     * 第二个参数durable: 是否持久化
+     *
+     * @return
+     */
     @Bean
     public Queue mailQueue() {
         return new Queue(MAIL_QUEUE_NAME, true);
     }
 
+    /**
+     * 第一个参数交换机名称
+     * 第二个参数durable: 是否持久化
+     * 第三个参数autoDelete: 当所有绑定队列都不再使用时, 是否自动删除交换器, true: 删除, false: 不删除
+     *
+     * @return
+     */
     @Bean
     public DirectExchange mailExchange() {
         return new DirectExchange(MAIL_EXCHANGE_NAME, true, false);
     }
 
+    /**
+     * 绑定队列和交换机指定路由键
+     *
+     * @return
+     */
     @Bean
     public Binding mailBinding() {
         return BindingBuilder.bind(mailQueue()).to(mailExchange()).with(MAIL_ROUTING_KEY_NAME);

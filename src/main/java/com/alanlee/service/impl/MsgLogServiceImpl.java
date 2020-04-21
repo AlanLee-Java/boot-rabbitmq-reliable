@@ -16,6 +16,11 @@ public class MsgLogServiceImpl implements MsgLogService {
     @Autowired
     private MsgLogMapper msgLogMapper;
 
+    /**
+     * 修改消息日志状态
+     * @param msgId
+     * @param status
+     */
     @Override
     public void updateStatus(String msgId, Integer status) {
         MsgLog msgLog = new MsgLog();

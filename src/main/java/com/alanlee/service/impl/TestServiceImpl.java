@@ -13,6 +13,7 @@ import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TestServiceImpl implements TestService {
@@ -23,14 +24,27 @@ public class TestServiceImpl implements TestService {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    /**
+     * 通过mq发送邮件
+     * 模拟微服务推送消息给另一个微服务消费（后续完善此业务逻辑）
+     * @param mail
+     * @return
+     */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ServerResponse send(Mail mail) {
         String msgId = RandomUtil.UUID32();
         mail.setMsgId(msgId);
 
+        // 假设此处执行的是某个微服务的业务,然后要把消息推送到其他的微服务消费
+        // 那么可以通过@Transactional注解保证业务和消息在一个事务中落地到数据库
+        // xxx微服务xxx业务执行
+
+        // 消息落地到数据库（在一个事务当中）
         MsgLog msgLog = new MsgLog(msgId, mail, RabbitConfig.MAIL_EXCHANGE_NAME, RabbitConfig.MAIL_ROUTING_KEY_NAME);
         msgLogMapper.insert(msgLog);// 消息入库
 
+        // 生产消息并发送
         CorrelationData correlationData = new CorrelationData(msgId);
         rabbitTemplate.convertAndSend(RabbitConfig.MAIL_EXCHANGE_NAME, RabbitConfig.MAIL_ROUTING_KEY_NAME, MessageHelper.objToMsg(mail), correlationData);// 发送消息
 

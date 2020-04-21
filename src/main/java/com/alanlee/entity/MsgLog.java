@@ -56,6 +56,13 @@ public class MsgLog {
      */
     private Date updateTime;
 
+    /**
+     * 创建消息对象
+     * @param msgId 消息id
+     * @param msg 消息体
+     * @param exchange 交换机
+     * @param routingKey 路由键
+     */
     public MsgLog(String msgId, Object msg, String exchange, String routingKey) {
         this.msgId = msgId;
         this.msg = JsonUtil.objToStr(msg);
