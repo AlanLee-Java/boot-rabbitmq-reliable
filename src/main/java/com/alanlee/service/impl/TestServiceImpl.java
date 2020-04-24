@@ -33,6 +33,7 @@ public class TestServiceImpl implements TestService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServerResponse send(Mail mail) {
+        // 业务无关消息ID，这里采用UUID32位
         String msgId = RandomUtil.UUID32();
         mail.setMsgId(msgId);
 
