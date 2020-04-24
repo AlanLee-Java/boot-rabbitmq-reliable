@@ -11,6 +11,11 @@ import org.springframework.amqp.core.MessageProperties;
 import java.lang.reflect.Proxy;
 import java.util.Map;
 
+/**
+ * 基础消费类动态代理类（基于BaseConsumer接口）
+ *
+ * @author AlanLee
+ */
 @Slf4j
 public class BaseConsumerProxy {
 
@@ -72,6 +77,7 @@ public class BaseConsumerProxy {
             String value = (String) entry.getValue();
             if (key.equals("spring_returned_message_correlation")) {
                 correlationId = value;
+                break;
             }
         }
 
