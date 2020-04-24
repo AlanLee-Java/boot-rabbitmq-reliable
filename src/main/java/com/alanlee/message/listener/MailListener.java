@@ -1,5 +1,6 @@
 package com.alanlee.message.listener;
 
+import com.alanlee.common.Constant;
 import com.alanlee.config.RabbitConfig;
 import com.alanlee.message.BaseConsumer;
 import com.alanlee.message.BaseConsumerProxy;
@@ -22,7 +23,7 @@ public class MailListener {
     @Autowired
     private MsgLogService msgLogService;
 
-    @RabbitListener(queues = RabbitConfig.MAIL_QUEUE_NAME)
+    @RabbitListener(queues = Constant.SendMailQueue.MAIL_QUEUE_NAME)
     public void consume(Message message, Channel channel) throws IOException {
         BaseConsumerProxy baseConsumerProxy = new BaseConsumerProxy(mailConsumer, msgLogService);
         BaseConsumer proxy = (BaseConsumer) baseConsumerProxy.getProxy();

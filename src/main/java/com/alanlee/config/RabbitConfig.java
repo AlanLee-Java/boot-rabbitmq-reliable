@@ -55,11 +55,6 @@ public class RabbitConfig {
         return new Jackson2JsonMessageConverter();
     }
 
-    // 发送邮件
-    public static final String MAIL_QUEUE_NAME = "mail.queue";
-    public static final String MAIL_EXCHANGE_NAME = "mail.exchange";
-    public static final String MAIL_ROUTING_KEY_NAME = "mail.routing.key";
-
     /**
      * 第一个参数队列名称
      * 第二个参数durable: 是否持久化
@@ -68,7 +63,7 @@ public class RabbitConfig {
      */
     @Bean
     public Queue mailQueue() {
-        return new Queue(MAIL_QUEUE_NAME, true);
+        return new Queue(Constant.SendMailQueue.MAIL_QUEUE_NAME, true);
     }
 
     /**
@@ -80,7 +75,7 @@ public class RabbitConfig {
      */
     @Bean
     public DirectExchange mailExchange() {
-        return new DirectExchange(MAIL_EXCHANGE_NAME, true, false);
+        return new DirectExchange(Constant.SendMailQueue.MAIL_EXCHANGE_NAME, true, false);
     }
 
     /**
@@ -90,7 +85,7 @@ public class RabbitConfig {
      */
     @Bean
     public Binding mailBinding() {
-        return BindingBuilder.bind(mailQueue()).to(mailExchange()).with(MAIL_ROUTING_KEY_NAME);
+        return BindingBuilder.bind(mailQueue()).to(mailExchange()).with(Constant.SendMailQueue.MAIL_ROUTING_KEY_NAME);
     }
 
 }

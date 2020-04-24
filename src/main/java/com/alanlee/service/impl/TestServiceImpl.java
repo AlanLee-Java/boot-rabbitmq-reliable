@@ -1,5 +1,6 @@
 package com.alanlee.service.impl;
 
+import com.alanlee.common.Constant;
 import com.alanlee.common.ResponseCode;
 import com.alanlee.common.ServerResponse;
 import com.alanlee.config.RabbitConfig;
@@ -42,12 +43,12 @@ public class TestServiceImpl implements TestService {
         // xxx微服务xxx业务执行
 
         // 消息落地到数据库（在一个事务当中）
-        MsgLog msgLog = new MsgLog(msgId, mail, RabbitConfig.MAIL_EXCHANGE_NAME, RabbitConfig.MAIL_ROUTING_KEY_NAME);
+        MsgLog msgLog = new MsgLog(msgId, mail, Constant.SendMailQueue.MAIL_EXCHANGE_NAME, Constant.SendMailQueue.MAIL_ROUTING_KEY_NAME);
         msgLogMapper.insert(msgLog);// 消息入库
 
         // 生产消息并发送
         CorrelationData correlationData = new CorrelationData(msgId);
-        rabbitTemplate.convertAndSend(RabbitConfig.MAIL_EXCHANGE_NAME, RabbitConfig.MAIL_ROUTING_KEY_NAME, MessageHelper.objToMsg(mail), correlationData);// 发送消息
+        rabbitTemplate.convertAndSend(Constant.SendMailQueue.MAIL_EXCHANGE_NAME, Constant.SendMailQueue.MAIL_ROUTING_KEY_NAME, MessageHelper.objToMsg(mail), correlationData);// 发送消息
 
         return ServerResponse.success(ResponseCode.MAIL_SEND_SUCCESS.getMsg());
     }

@@ -12,4 +12,13 @@ public class Constant {
         Integer CONSUMED_SUCCESS = 3;// 已消费
     }
 
+    /**
+     * 发送邮件消息队列常量
+     */
+    public interface SendMailQueue {
+        String MAIL_QUEUE_NAME = "mail.queue";
+        String MAIL_EXCHANGE_NAME = "mail.exchange";
+        String MAIL_ROUTING_KEY_NAME = "mail.routing.key";
+    }
+
 }
